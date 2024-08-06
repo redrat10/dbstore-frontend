@@ -9,7 +9,7 @@ import {
 
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const { data } = await Axios.get(
-    ` http://localhost:5000/api/products/${productId}`
+    `https://api.redrat.cc/api/products/${productId}`
   );
   const {
     cart: { cartItems },
@@ -48,6 +48,7 @@ export const saveShippingAddress = (data) => (dispatch) => {
   dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
   localStorage.setItem("shippingAddress", JSON.stringify(data));
 };
+
 export const savePaymentMethod = (data) => (dispatch) => {
   dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
 };

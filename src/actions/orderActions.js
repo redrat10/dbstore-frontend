@@ -33,7 +33,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     const { data } = await Axios.post(
-      " http://localhost:5000/api/orders",
+      "https://api.redrat.cc/api/orders",
       order,
       {
         headers: {
@@ -62,7 +62,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      ` http://localhost:5000/api/orders/${orderId}`,
+      `https://api.redrat.cc/api/orders/${orderId}`,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -85,7 +85,7 @@ export const payOrder =
     } = getState();
     try {
       const { data } = Axios.put(
-        ` http://localhost:5000/api/orders/${order._id}/pay`,
+        `https://api.redrat.cc/api/orders/${order._id}/pay`,
         paymentResult,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -100,13 +100,14 @@ export const payOrder =
       dispatch({ type: ORDER_PAY_FAIL, payload: message });
     }
   };
+
 export const listOrderMine = () => async (dispatch, getState) => {
   dispatch({ type: ORDER_MINE_LIST_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(" http://localhost:5000/api/orders/mine", {
+    const { data } = await Axios.get("https://api.redrat.cc/api/orders/mine", {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -120,6 +121,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message });
   }
 };
+
 export const listOrders =
   ({ seller = "" }) =>
   async (dispatch, getState) => {
@@ -129,7 +131,7 @@ export const listOrders =
     } = getState();
     try {
       const { data } = await Axios.get(
-        ` http://localhost:5000/api/orders?seller=${seller}`,
+        `https://api.redrat.cc/api/orders?seller=${seller}`,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -144,6 +146,7 @@ export const listOrders =
       dispatch({ type: ORDER_LIST_FAIL, payload: message });
     }
   };
+
 export const deleteOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
   const {
@@ -151,7 +154,7 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.delete(
-      ` http://localhost:5000/api/orders/${orderId}`,
+      `https://api.redrat.cc/api/orders/${orderId}`,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -173,7 +176,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.put(
-      ` http://localhost:5000/api/orders/${orderId}/deliver`,
+      `https://api.redrat.cc/api/orders/${orderId}/deliver`,
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -196,7 +199,7 @@ export const summaryOrder = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      " http://localhost:5000/api/orders/summary",
+      "https://api.redrat.cc/api/orders/summary",
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }

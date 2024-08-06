@@ -40,7 +40,7 @@ export const listProducts =
     });
     try {
       const { data } = await Axios.get(
-        ` http://localhost:5000/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `https://api.redrat.cc/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -54,7 +54,7 @@ export const listProductCategories = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      ` http://localhost:5000/api/products/categories`
+      `https://api.redrat.cc/api/products/categories`
     );
     dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -66,7 +66,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const { data } = await Axios.get(
-      ` http://localhost:5000/api/products/${productId}`
+      `https://api.redrat.cc/api/products/${productId}`
     );
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -79,6 +79,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
     });
   }
 };
+
 export const createProduct = () => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CREATE_REQUEST });
   const {
@@ -86,7 +87,7 @@ export const createProduct = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.post(
-      " http://localhost:5000/api/products",
+      "https://api.redrat.cc/api/products",
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -104,6 +105,7 @@ export const createProduct = () => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_CREATE_FAIL, payload: message });
   }
 };
+
 export const updateProduct = (product) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_UPDATE_REQUEST, payload: product });
   const {
@@ -111,7 +113,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.put(
-      ` http://localhost:5000/api/products/${product._id}`,
+      `https://api.redrat.cc/api/products/${product._id}`,
       product,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -126,13 +128,14 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_UPDATE_FAIL, error: message });
   }
 };
+
 export const deleteProduct = (productId) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    await Axios.delete(` http://localhost:5000/api/products/${productId}`, {
+    await Axios.delete(`https://api.redrat.cc/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
@@ -144,6 +147,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: message });
   }
 };
+
 export const createReview =
   (productId, review) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_REVIEW_CREATE_REQUEST });
@@ -152,8 +156,7 @@ export const createReview =
     } = getState();
     try {
       const { data } = await Axios.post(
-        ` http://localhost:5000
-/api/products/${productId}/reviews`,
+        `https://api.redrat.cc/api/products/${productId}/reviews`,
         review,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
