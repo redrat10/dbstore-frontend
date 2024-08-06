@@ -1,5 +1,5 @@
-import Axios from 'axios';
-import { CART_EMPTY } from '../constants/cartConstants';
+import Axios from "axios";
+import { CART_EMPTY } from "../constants/cartConstants";
 import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
@@ -24,7 +24,7 @@ import {
   ORDER_DELIVER_FAIL,
   ORDER_SUMMARY_REQUEST,
   ORDER_SUMMARY_SUCCESS,
-} from '../constants/orderConstants';
+} from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
@@ -33,7 +33,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     const { data } = await Axios.post(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders',
+      " http://localhost:5000/api/orders",
       order,
       {
         headers: {
@@ -43,7 +43,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     );
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
-    localStorage.removeItem('cartItems');
+    localStorage.removeItem("cartItems");
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -62,7 +62,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/${orderId}`,
+      ` http://localhost:5000/api/orders/${orderId}`,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -85,7 +85,7 @@ export const payOrder =
     } = getState();
     try {
       const { data } = Axios.put(
-        ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/${order._id}/pay`,
+        ` http://localhost:5000/api/orders/${order._id}/pay`,
         paymentResult,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -106,14 +106,11 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/mine',
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
+    const { data } = await Axios.get(" http://localhost:5000/api/orders/mine", {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     dispatch({ type: ORDER_MINE_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -124,7 +121,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
   }
 };
 export const listOrders =
-  ({ seller = '' }) =>
+  ({ seller = "" }) =>
   async (dispatch, getState) => {
     dispatch({ type: ORDER_LIST_REQUEST });
     const {
@@ -132,7 +129,7 @@ export const listOrders =
     } = getState();
     try {
       const { data } = await Axios.get(
-        ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders?seller=${seller}`,
+        ` http://localhost:5000/api/orders?seller=${seller}`,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -154,7 +151,7 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.delete(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/${orderId}`,
+      ` http://localhost:5000/api/orders/${orderId}`,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -176,7 +173,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.put(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/${orderId}/deliver`,
+      ` http://localhost:5000/api/orders/${orderId}/deliver`,
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -199,7 +196,7 @@ export const summaryOrder = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/orders/summary',
+      " http://localhost:5000/api/orders/summary",
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }

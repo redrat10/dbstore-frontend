@@ -1,36 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import { signout } from './actions/userActions';
-import AdminRoute from './components/AdminRoute';
-import PrivateRoute from './components/PrivateRoute';
-import CartScreen from './screens/CartScreen';
-import HomeScreen from './screens/HomeScreen';
-import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import OrderScreen from './screens/OrderScreen';
-import PaymentMethodScreen from './screens/PaymentMethodScreen';
-import PlaceOrderScreen from './screens/PlaceOrderScreen';
-import ProductListScreen from './screens/ProductListScreen';
-import ProductScreen from './screens/ProductScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ShippingAddressScreen from './screens/ShippingAddressScreen';
-import SigninScreen from './screens/SigninScreen';
-import ProductEditScreen from './screens/ProductEditScreen';
-import OrderListScreen from './screens/OrderListScreen';
-import UserListScreen from './screens/UserListScreen';
-import UserEditScreen from './screens/UserEditScreen';
-import SellerRoute from './components/SellerRoute';
-import SellerScreen from './screens/SellerScreen';
-import SearchBox from './components/SearchBox';
-import SearchScreen from './screens/SearchScreen';
-import { listProductCategories } from './actions/productActions';
-import LoadingBox from './components/LoadingBox';
-import MessageBox from './components/MessageBox';
-import MapScreen from './screens/MapScreen';
-import DashboardScreen from './screens/DashboardScreen';
-import SupportScreen from './screens/SupportScreen';
-import ChatBox from './components/ChatBox';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { signout } from "./actions/userActions";
+import AdminRoute from "./components/AdminRoute";
+import PrivateRoute from "./components/PrivateRoute";
+import CartScreen from "./screens/CartScreen";
+import HomeScreen from "./screens/HomeScreen";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import OrderScreen from "./screens/OrderScreen";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import ProductListScreen from "./screens/ProductListScreen";
+import ProductScreen from "./screens/ProductScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ShippingAddressScreen from "./screens/ShippingAddressScreen";
+import SigninScreen from "./screens/SigninScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
+import OrderListScreen from "./screens/OrderListScreen";
+import UserListScreen from "./screens/UserListScreen";
+import UserEditScreen from "./screens/UserEditScreen";
+import SellerRoute from "./components/SellerRoute";
+import SellerScreen from "./screens/SellerScreen";
+import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screens/SearchScreen";
+import { listProductCategories } from "./actions/productActions";
+import LoadingBox from "./components/LoadingBox";
+import MessageBox from "./components/MessageBox";
+import MapScreen from "./screens/MapScreen";
+import DashboardScreen from "./screens/DashboardScreen";
+import SupportScreen from "./screens/SupportScreen";
+import ChatBox from "./components/ChatBox";
+import logo from "./assets/logo.png";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -54,109 +55,110 @@ function App() {
   }, [dispatch]);
   return (
     <BrowserRouter>
-      <div className='grid-container'>
-        <header className='row'>
+      <div className="grid-container">
+        <header className="row">
           <div>
             <button
-              type='button'
-              className='open-sidebar'
+              type="button"
+              className="open-sidebar"
               onClick={() => setSidebarIsOpen(true)}
             >
-              <i className='fa fa-bars'></i>
+              <i className="fa fa-bars"></i>
             </button>
-            <Link className='brand' to='/'>
-              DB STORE
+            <Link className="brand" to="/">
+              <img src={logo} alt="Red Rat Logo" />
+              Red Rat
             </Link>
           </div>
           <div>
             <SearchBox />
           </div>
           <div>
-            <Link to='/cart'>
+            <Link to="/cart">
               Cart
               {cartItems.length > 0 && (
-                <span className='badge'>{cartItems.length}</span>
+                <span className="badge">{cartItems.length}</span>
               )}
             </Link>
             {userInfo ? (
-              <div className='dropdown'>
-                <Link to='#'>
-                  {userInfo.name} <i className='fa fa-caret-down'></i>{' '}
+              <div className="dropdown">
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{" "}
                 </Link>
-                <ul className='dropdown-content'>
+                <ul className="dropdown-content">
                   <li>
-                    <Link to='/profile'>User Profile</Link>
+                    <Link to="/profile">User Profile</Link>
                   </li>
                   <li>
-                    <Link to='/orderhistory'>Order History</Link>
+                    <Link to="/orderhistory">Order History</Link>
                   </li>
                   <li>
-                    <Link to='#signout' onClick={signoutHandler}>
+                    <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
                     </Link>
                   </li>
                 </ul>
               </div>
             ) : (
-              <Link to='/signin'>Sign In</Link>
+              <Link to="/signin">Sign In</Link>
             )}
             {userInfo && userInfo.isSeller && (
-              <div className='dropdown'>
-                <Link to='#admin'>
-                  Seller <i className='fa fa-caret-down'></i>
+              <div className="dropdown">
+                <Link to="#admin">
+                  Seller <i className="fa fa-caret-down"></i>
                 </Link>
-                <ul className='dropdown-content'>
+                <ul className="dropdown-content">
                   <li>
-                    <Link to='/productlist/seller'>Products</Link>
+                    <Link to="/productlist/seller">Products</Link>
                   </li>
                   <li>
-                    <Link to='/orderlist/seller'>Orders</Link>
+                    <Link to="/orderlist/seller">Orders</Link>
                   </li>
                 </ul>
               </div>
             )}
             {userInfo && userInfo.isAdmin && (
-              <div className='dropdown'>
-                <Link to='#admin'>
-                  Admin <i className='fa fa-caret-down'></i>
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
                 </Link>
-                <ul className='dropdown-content'>
+                <ul className="dropdown-content">
                   <li>
-                    <Link to='/dashboard'>Dashboard</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
-                    <Link to='/productlist'>Products</Link>
+                    <Link to="/productlist">Products</Link>
                   </li>
                   <li>
-                    <Link to='/orderlist'>Orders</Link>
+                    <Link to="/orderlist">Orders</Link>
                   </li>
                   <li>
-                    <Link to='/userlist'>Users</Link>
+                    <Link to="/userlist">Users</Link>
                   </li>
                   <li>
-                    <Link to='/support'>Support</Link>
+                    <Link to="/support">Support</Link>
                   </li>
                 </ul>
               </div>
             )}
           </div>
         </header>
-        <aside className={sidebarIsOpen ? 'open' : ''}>
-          <ul className='categories'>
+        <aside className={sidebarIsOpen ? "open" : ""}>
+          <ul className="categories">
             <li>
               <strong>Categories</strong>
               <button
                 onClick={() => setSidebarIsOpen(false)}
-                className='close-sidebar'
-                type='button'
+                className="close-sidebar"
+                type="button"
               >
-                <i className='fa fa-close'></i>
+                <i className="fa fa-close"></i>
               </button>
             </li>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
             ) : errorCategories ? (
-              <MessageBox variant='danger'>{errorCategories}</MessageBox>
+              <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
               categories.map((c) => (
                 <li key={c}>
@@ -173,54 +175,54 @@ function App() {
         </aside>
         <main>
           <Routes>
-            <Route path='/seller/:id' element={<SellerScreen />}></Route>
-            <Route path='/cart' element={<CartScreen />}></Route>
-            <Route path='/cart/:id' element={<CartScreen />}></Route>
+            <Route path="/seller/:id" element={<SellerScreen />}></Route>
+            <Route path="/cart" element={<CartScreen />}></Route>
+            <Route path="/cart/:id" element={<CartScreen />}></Route>
             <Route
-              path='/product/:id'
+              path="/product/:id"
               element={<ProductScreen />}
               exact
             ></Route>
             <Route
-              path='/product/:id/edit'
+              path="/product/:id/edit"
               element={ProductEditScreen}
               exact
             ></Route>
 
-            <Route path='/signin' element={<SigninScreen />}></Route>
-            <Route path='/register' element={<RegisterScreen />}></Route>
-            <Route path='/shipping' element={<ShippingAddressScreen />}></Route>
-            <Route path='/payment' element={<PaymentMethodScreen />}></Route>
-            <Route path='/placeorder' element={<PlaceOrderScreen />}></Route>
-            <Route path='/order/:id' element={<OrderScreen />}></Route>
+            <Route path="/signin" element={<SigninScreen />}></Route>
+            <Route path="/register" element={<RegisterScreen />}></Route>
+            <Route path="/shipping" element={<ShippingAddressScreen />}></Route>
+            <Route path="/payment" element={<PaymentMethodScreen />}></Route>
+            <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
+            <Route path="/order/:id" element={<OrderScreen />}></Route>
             <Route
-              path='/orderhistory'
+              path="/orderhistory"
               element={<OrderHistoryScreen />}
             ></Route>
-            <Route path='/search/name' element={<SearchScreen />} exact></Route>
+            <Route path="/search/name" element={<SearchScreen />} exact></Route>
             <Route
-              path='/search/name/:name'
+              path="/search/name/:name"
               element={<SearchScreen />}
               exact
             ></Route>
             <Route
-              path='/search/category/:category'
+              path="/search/category/:category"
               element={<SearchScreen />}
               exact
             ></Route>
             <Route
-              path='/search/category/:category/name/:name'
+              path="/search/category/:category/name/:name"
               element={<SearchScreen />}
               exact
             ></Route>
             <Route
-              path='/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber'
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
               element={<SearchScreen />}
               exact
             ></Route>
 
             <Route
-              path='/profile'
+              path="/profile"
               element={
                 <PrivateRoute>
                   <ProfileScreen />
@@ -228,7 +230,7 @@ function App() {
               }
             />
             <Route
-              path='/map'
+              path="/map"
               element={
                 <PrivateRoute>
                   <MapScreen />
@@ -237,7 +239,7 @@ function App() {
             />
 
             <Route
-              path='/productlist'
+              path="/productlist"
               element={
                 <AdminRoute>
                   <ProductListScreen />
@@ -246,7 +248,7 @@ function App() {
             />
 
             <Route
-              path='/productlist/pageNumber/:pageNumber'
+              path="/productlist/pageNumber/:pageNumber"
               element={
                 <AdminRoute>
                   <ProductListScreen />
@@ -254,7 +256,7 @@ function App() {
               }
             />
             <Route
-              path='/orderlist'
+              path="/orderlist"
               element={
                 <AdminRoute>
                   <OrderListScreen />
@@ -262,7 +264,7 @@ function App() {
               }
             />
             <Route
-              path='/userlist'
+              path="/userlist"
               element={
                 <AdminRoute>
                   <UserListScreen />
@@ -270,7 +272,7 @@ function App() {
               }
             />
             <Route
-              path='/user/:id/edit'
+              path="/user/:id/edit"
               element={
                 <AdminRoute>
                   <UserEditScreen />
@@ -278,7 +280,7 @@ function App() {
               }
             />
             <Route
-              path='/dashboard'
+              path="/dashboard"
               element={
                 <AdminRoute>
                   <DashboardScreen />
@@ -286,7 +288,7 @@ function App() {
               }
             />
             <Route
-              path='/support'
+              path="/support"
               element={
                 <AdminRoute>
                   <SupportScreen />
@@ -294,7 +296,7 @@ function App() {
               }
             />
             <Route
-              path='/productlist/seller'
+              path="/productlist/seller"
               element={
                 <SellerRoute>
                   <ProductListScreen />
@@ -302,7 +304,7 @@ function App() {
               }
             />
             <Route
-              path='/orderlist/seller'
+              path="/orderlist/seller"
               element={
                 <SellerRoute>
                   <OrderListScreen />
@@ -310,12 +312,12 @@ function App() {
               }
             />
 
-            <Route path='/' element={<HomeScreen />} exact></Route>
+            <Route path="/" element={<HomeScreen />} exact></Route>
           </Routes>
         </main>
-        <footer className='row center'>
+        <footer className="row center">
           {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          <div>All right reserved</div>{' '}
+          <div>All right reserved</div>{" "}
         </footer>
       </div>
     </BrowserRouter>

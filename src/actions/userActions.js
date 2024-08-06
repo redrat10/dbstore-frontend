@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -24,25 +24,22 @@ import {
   USER_TOPSELLERS_LIST_REQUEST,
   USER_TOPSELLERS_LIST_SUCCESS,
   USER_TOPSELLERS_LIST_FAIL,
-} from '../constants/userConstants';
+} from "../constants/userConstants";
 
 export const register = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
   try {
     const { data } = await Axios.post(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/register',
+      " http://localhost:5000/api/users/register",
       {
         name,
         email,
         password,
-
-           
-
       }
     );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
@@ -58,11 +55,11 @@ export const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     const { data } = await Axios.post(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/signin',
+      " http://localhost:5000/api/users/signin",
       { email, password }
     );
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_SIGNIN_FAIL,
@@ -75,11 +72,11 @@ export const signin = (email, password) => async (dispatch) => {
 };
 
 export const signout = () => (dispatch) => {
-  localStorage.removeItem('userInfo');
-  localStorage.removeItem('cartItems');
-  localStorage.removeItem('shippingAddress');
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("shippingAddress");
   dispatch({ type: USER_SIGNOUT });
-  document.location.href = '/signin';
+  document.location.href = "/signin";
 };
 export const detailsUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
@@ -88,7 +85,7 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/${userId}`,
+      ` http://localhost:5000/api/users/${userId}`,
       {
         headers: { Authorization: `Bearer ${userInfo?.token}` },
       }
@@ -109,7 +106,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.put(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/profile`,
+      ` http://localhost:5000/api/users/profile`,
       user,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -117,7 +114,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     );
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -133,7 +130,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.put(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/${user._id}`,
+      ` http://localhost:5000/api/users/${user._id}`,
       user,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -154,14 +151,11 @@ export const listUsers = () => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-    const { data } = await Axios.get(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users',
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
+    const { data } = await Axios.get(" http://localhost:5000/api/users", {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -178,7 +172,7 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.delete(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/${userId}`,
+      ` http://localhost:5000/api/users/${userId}`,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }
@@ -196,7 +190,7 @@ export const listTopSellers = () => async (dispatch) => {
   dispatch({ type: USER_TOPSELLERS_LIST_REQUEST });
   try {
     const { data } = await Axios.get(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/users/top-sellers'
+      " http://localhost:5000/api/users/top-sellers"
     );
     dispatch({ type: USER_TOPSELLERS_LIST_SUCCESS, payload: data });
   } catch (error) {

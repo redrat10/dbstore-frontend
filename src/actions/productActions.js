@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
@@ -21,15 +21,15 @@ import {
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
-} from '../constants/productConstants';
+} from "../constants/productConstants";
 
 export const listProducts =
   ({
-    pageNumber = '',
-    seller = '',
-    name = '',
-    category = '',
-    order = '',
+    pageNumber = "",
+    seller = "",
+    name = "",
+    category = "",
+    order = "",
     min = 0,
     max = 0,
     rating = 0,
@@ -40,7 +40,7 @@ export const listProducts =
     });
     try {
       const { data } = await Axios.get(
-        ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        ` http://localhost:5000/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -54,7 +54,7 @@ export const listProductCategories = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products/categories`
+      ` http://localhost:5000/api/products/categories`
     );
     dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -66,7 +66,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const { data } = await Axios.get(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products/${productId}`
+      ` http://localhost:5000/api/products/${productId}`
     );
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -86,7 +86,7 @@ export const createProduct = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.post(
-      ' https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products',
+      " http://localhost:5000/api/products",
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -111,7 +111,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.put(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products/${product._id}`,
+      ` http://localhost:5000/api/products/${product._id}`,
       product,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -132,12 +132,9 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    await Axios.delete(
-      ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products/${productId}`,
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    await Axios.delete(` http://localhost:5000/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
     const message =
@@ -155,7 +152,8 @@ export const createReview =
     } = getState();
     try {
       const { data } = await Axios.post(
-        ` https://martinkkyaloapi-4102a7d4ef00.herokuapp.com/api/products/${productId}/reviews`,
+        ` http://localhost:5000
+/api/products/${productId}/reviews`,
         review,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

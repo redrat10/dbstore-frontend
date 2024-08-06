@@ -18,9 +18,9 @@ body {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header'
-    'main'
-    'footer';
+    "header"
+    "main"
+    "footer";
   grid-template-columns: 1fr;
   grid-template-rows: 5rem 1fr 5rem;
   height: 100%;
@@ -29,6 +29,22 @@ header {
   grid-area: header;
   background-color: #203040;
 }
+
+/* logo */
+header .brand img {
+  max-height: 80px; /* Adjust the height as needed */
+  width: auto;
+  display: inline-block;
+  vertical-align: middle; /* Aligns the image with any text beside it */
+  margin-right: 20px; /* Increase the space between the logo and the brand name */
+}
+
+header .brand {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Increase the space between the brand and other elements */
+}
+
 main {
   grid-area: main;
   padding: 1rem;
