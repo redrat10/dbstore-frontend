@@ -31,7 +31,6 @@ import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SupportScreen from "./screens/SupportScreen";
 import ChatBox from "./components/ChatBox";
-import logo from "./assets/logo.png";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -66,8 +65,7 @@ function App() {
               <i className="fa fa-bars"></i>
             </button>
             <Link className="brand" to="/">
-              <img src={logo} alt="Red Rat Logo" />
-              Red Rat
+              RED RAT
             </Link>
           </div>
           <div>
