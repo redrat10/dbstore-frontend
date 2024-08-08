@@ -26,21 +26,19 @@ import {
   ORDER_SUMMARY_SUCCESS,
 } from "../constants/orderConstants";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export const createOrder = (order) => async (dispatch, getState) => {
   dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
   try {
     const {
       userSignin: { userInfo },
     } = getState();
-    const { data } = await Axios.post(
-      "https://api.redrat.cc/api/orders",
-      order,
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
+    const { data } = await Axios.post(`${BASE_URL}/api/orders`, order, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
@@ -61,12 +59,9 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(
-      `https://api.redrat.cc/api/orders/${orderId}`,
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    const { data } = await Axios.get(`${BASE_URL}/api/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -85,7 +80,7 @@ export const payOrder =
     } = getState();
     try {
       const { data } = Axios.put(
-        `https://api.redrat.cc/api/orders/${order._id}/pay`,
+        `${BASE_URL}/api/orders/${order._id}/pay`,
         paymentResult,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -107,7 +102,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get("https://api.redrat.cc/api/orders/mine", {
+    const { data } = await Axios.get(`${BASE_URL}/api/orders/mine`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -131,7 +126,7 @@ export const listOrders =
     } = getState();
     try {
       const { data } = await Axios.get(
-        `https://api.redrat.cc/api/orders?seller=${seller}`,
+        `${BASE_URL}/api/orders?seller=${seller}`,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -153,12 +148,9 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.delete(
-      `https://api.redrat.cc/api/orders/${orderId}`,
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    const { data } = await Axios.delete(`${BASE_URL}/api/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -176,7 +168,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = Axios.put(
-      `https://api.redrat.cc/api/orders/${orderId}/deliver`,
+      `${BASE_URL}/api/orders/${orderId}/deliver`,
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -198,12 +190,9 @@ export const summaryOrder = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(
-      "https://api.redrat.cc/api/orders/summary",
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    const { data } = await Axios.get(`${BASE_URL}/api/orders/summary`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

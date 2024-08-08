@@ -7,10 +7,10 @@ import {
   CART_ADD_ITEM_FAIL,
 } from "../constants/cartConstants";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
-  const { data } = await Axios.get(
-    `https://api.redrat.cc/api/products/${productId}`
-  );
+  const { data } = await Axios.get(`${BASE_URL}/api/products/${productId}`);
   const {
     cart: { cartItems },
   } = getState();
